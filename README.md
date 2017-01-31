@@ -1,5 +1,5 @@
 ## InstaBot
-InstaBot v 1.0.1
+InstaBot v 1.1.0
 
 Works without the new Instagram [api][1](the new review process)
 Username and password stored local. Written in Python
@@ -29,10 +29,13 @@ bot = InstaBot('login', 'password',
                 unfollow_per_day=0,
                 comments_per_day=0,
                 tag_list=['cat', 'car', 'dog'],
+                tag_blacklist=['rain', 'thunderstorm'],
+                user_blacklist={'hellokitty':'', 'hellokitty3':''},
                 max_like_for_one_tag = 5,
                 unfollow_break_min = 15,
                 unfollow_break_max = 30,
-                log_mod = 0)
+                log_mod = 0,
+                proxy='')
 ```
 
 | Parameter            | Type|                Description                           |        Default value             |                 Example value                   |
@@ -47,11 +50,13 @@ bot = InstaBot('login', 'password',
 | unfollow_per_day     | int | how many user unfollows the bot does in day          | 0                                | 100                                             |
 | comments_per_day     | int | how many comments the bot writes in a day            | 0                                | 50                                              |
 | tag_list             | list| list of tag the bot uses                             | ['cat', 'car', 'dog']            | ['moto', 'girl', 'python']                      |
+| tag_blacklist        | list| list of tags the bot refuses to like                 | []                               | ['rain', 'thunderstorm']                        |
+| user_blacklist       | dict| don't like posts from certain users                  | {}                               | {'hellokitty':'', 'hellokitty3':''}             |
 | max_like_for_one_tag | int | bot get 21 media from one tag, how many use by row   | 5                                | 10                                              |
 | unfollow_break_min   | int | Minimum seconds for unfollow break pause             | 15                               | 30                                              |
 | unfollow_break_max   | int | Maximum seconds for unfollow break pause             | 30                               | 60                                              |
 | log_mod              | int | logging mod                                          | 0                                | 0 log to console, 1 log to file, 2 no log.      |
-
+| proxy             | string | Access instagram through a proxy server              |                                  | Without authentication: proxy:port, example: 10.10.1.10:3128, with authentication: user:password@proxy:port, example: user:password@10.10.1.10:3128 |
 
 ####2) Set likes and unlike:
 How many likes set bot in one day. Default value is 1000 likes per 24 hours.
@@ -176,8 +181,13 @@ Windows - Python 3.4 & Python 2.7.11
 CentOS - Python 3.4 & Python 2.6
 
 Ubuntu 15.10 wily - Python 3.4.3+ & 2.7.10
+
+MacOS X El Captain 10.11.4 - Python 2.7
 ## Warning!
 The End-User assumes sole responsibility for anything resulting from the use or modification this program.
+Don't worry the bot will not :
+- Like - comment or follow your own account or media
+- Comment a media already commented
 
 ## Work with [InstagramAPI.py][4]
 I rewrote, created by @mgp25 php class, to work with the instagram API. This class give ALL access to instagram (login, post photo/video, comment, follow, get followers and etc.). This class pretends device on android and can work like android APP. In future I will rewrite all this bot to InstagramAPI.py.
@@ -200,6 +210,12 @@ or if you know `user_id` use `ui.search_user(user_id="50417061")`. Your result:
 print(ui.user_name)
 print(ui.user_id)
 ```
+
+Get user id by username
+```python
+ui.get_user_id_by_login("nekflamm")
+```
+
 Get following list with no limit
 ```python
 ui.get_following()
@@ -210,6 +226,11 @@ Get followers list with limit 10:
 ui.get_followers(limit=10)
 print(ui.followers)
 ```
+
+## Community
+
+- [Telegram Group](https://telegram.me/joinchat/DYKH-wdXpfmQCdcJLaV48Q)
+- [Facebook Group](https://www.facebook.com/groups/instabot/)
 
 [1]: http://developers.instagram.com/post/133424514006/instagram-platform-update
 [2]: https://www.instagram.com
